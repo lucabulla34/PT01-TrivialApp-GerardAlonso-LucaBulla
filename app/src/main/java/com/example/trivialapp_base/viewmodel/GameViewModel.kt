@@ -51,6 +51,7 @@ class GameViewModel : ViewModel() {
     }
 
     private fun iniciarTimer() {
+
     }
 
     override fun onCleared() {

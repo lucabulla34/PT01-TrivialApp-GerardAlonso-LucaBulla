@@ -15,8 +15,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.example.trivialapp_base.ui.theme.TrivialAPP_BaseTheme
-import com.example.trivialapp_base.view.EntryPoint
 import androidx.compose.material3.MaterialTheme
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.trivialapp_base.view.GameScreen
+import com.example.trivialapp_base.view.MenuScreen
+import com.example.trivialapp_base.viewmodel.GameViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +37,15 @@ class MainActivity : ComponentActivity() {
                 ) {
                     // Definim el controlador de navegació
                     val navigationController = rememberNavController()
-                    // Crida a la vista EntryPoint i passa el controlador de navegació
-                    EntryPoint(navigationController)
+                    NavHost(
+                        navController = navigationController as NavHostController,
+                        startDestination = Routes.MenuScreen.route
+                    ) {
+                        composable(Routes.MenuScreen.route) { MenuScreen(navigationController,
+                            GameViewModel()) }
+                        composable(Routes.GameScreen.route) {GameScreen(navigationController,GameViewModel()) }
+
+                    }
                 }
 
 
