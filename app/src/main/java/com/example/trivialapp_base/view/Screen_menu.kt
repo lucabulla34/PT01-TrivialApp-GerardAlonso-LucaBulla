@@ -1,4 +1,5 @@
 package com.example.trivialapp_base.view
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.OutlinedTextField
@@ -32,6 +34,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.trivialapp_base.R
+import com.example.trivialapp_base.Routes
 import com.example.trivialapp_base.viewmodel.GameViewModel
 
 
@@ -40,7 +43,7 @@ fun MenuScreen(navController: NavController, viewModel: GameViewModel = viewMode
 
     var selectedText: String by remember { mutableStateOf("") }
     var expanded: Boolean by remember { mutableStateOf(false) }
-    val difficulty = listOf("Easy", "Medium","El dark souls de los trivials")
+    val difficulty = listOf("Facil", "Medio","Dificil")
 
 
     ConstraintLayout(
@@ -48,7 +51,7 @@ fun MenuScreen(navController: NavController, viewModel: GameViewModel = viewMode
             .fillMaxSize()
             .background(Color.White)
     ) {
-        val (logoRef, ddmRef) = createRefs()
+        val (logoRef, ddmRef,buttonRef) = createRefs()
 
         Image(
             painter = painterResource(id = R.drawable.logo),
@@ -99,5 +102,24 @@ fun MenuScreen(navController: NavController, viewModel: GameViewModel = viewMode
                 }
             }
         }
+        Button(
+            onClick = {
+
+                navController.navigate(Routes.GameScreen.route)
+            },
+            modifier = Modifier.constrainAs(buttonRef) {
+                top.linkTo(ddmRef.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.White,
+                contentColor = Color.Black
+            ),
+            border = BorderStroke(5.dp, Color.Gray)
+        ) {
+            Text("Play")
+        }
+
     }
 }
