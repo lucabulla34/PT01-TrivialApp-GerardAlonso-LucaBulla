@@ -56,7 +56,6 @@ class GameViewModel : ViewModel() {
         cargarSiguientePregunta()
     }
 
-
     private fun cargarSiguientePregunta() {
         if (indicePreguntaActual >= preguntasPartida.size) {
             juegoTerminado = true
