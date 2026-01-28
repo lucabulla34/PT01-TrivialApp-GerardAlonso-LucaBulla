@@ -43,7 +43,7 @@ fun MenuScreen(navController: NavController, viewModel: GameViewModel = viewMode
 
     var selectedText: String by remember { mutableStateOf("") }
     var expanded: Boolean by remember { mutableStateOf(false) }
-    val difficulty = listOf("Easy", "Medium","El dark souls de los trivials")
+    val difficulty = listOf("Facil", "Medio","Dificil")
 
 
     ConstraintLayout(
