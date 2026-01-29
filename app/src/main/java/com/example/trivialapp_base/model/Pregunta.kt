@@ -16,7 +16,7 @@ data class Pregunta(
 object ProveedorPreguntas {
     fun obtenerPreguntas(): MutableList<Pregunta> {
         return mutableListOf(
-            // --- GEOGRAFÍA (10) ---
+            // --- GEOGRAFÍA ---
             Pregunta("¿Capital de Francia?", "Geografía", "Facil", "Madrid", "París", "Berlín", "Roma", "París"),
             Pregunta("¿País más grande del mundo?", "Geografía", "Facil", "China", "EEUU", "Rusia", "Canadá", "Rusia"),
             Pregunta("¿Río más largo del mundo?", "Geografía", "Facil", "Nilo", "Amazonas", "Danubio", "Misisipi", "Amazonas"),
@@ -28,7 +28,7 @@ object ProveedorPreguntas {
             Pregunta("¿Qué país tiene más fronteras?", "Geografía", "Dificil", "Rusia", "China", "Brasil", "India", "China"),
             Pregunta("¿Capital de Nigeria?", "Geografía", "Dificil", "Lagos", "Abuya", "Kano", "Ibadán", "Abuya"),
 
-            // --- CIENCIA (10) ---
+            // --- CIENCIA ---
             Pregunta("¿Fórmula del agua?", "Ciencia", "Facil", "H2O", "CO2", "O2", "H2O2", "H2O"),
             Pregunta("¿Planeta más grande?", "Ciencia", "Facil", "Tierra", "Marte", "Júpiter", "Saturno", "Júpiter"),
             Pregunta("¿El Sol es una...?", "Ciencia", "Facil", "Planeta", "Cometa", "Galaxia", "Estrella", "Estrella"),
@@ -40,7 +40,7 @@ object ProveedorPreguntas {
             Pregunta("¿Qué gas usamos para respirar?", "Ciencia", "Dificil", "Nitrógeno", "Argón", "Oxígeno", "Hidrógeno", "Oxígeno"),
             Pregunta("¿Quién propuso la Selección Natural?", "Ciencia", "Dificil", "Newton", "Tesla", "Darwin", "Einstein", "Darwin"),
 
-            // --- DEPORTES (Fútbol) (10) ---
+            // --- DEPORTES ---
             Pregunta("¿Campeón mundial fútbol 2010?", "Deportes", "Facil", "Brasil", "Alemania", "España", "Italia", "España"),
             Pregunta("¿Cuántos jugadores por equipo?", "Deportes", "Facil", "10", "11", "12", "9", "11"),
             Pregunta("¿Máximo goleador histórico mundiales?", "Deportes", "Facil", "Pelé", "Klose", "Messi", "Ronaldo", "Klose"),
@@ -52,7 +52,7 @@ object ProveedorPreguntas {
             Pregunta("¿Quién ganó el Balón de Oro 1995?", "Deportes", "Dificil", "Weah", "Baggio", "Stoichkov", "Ronaldo", "Weah"),
             Pregunta("¿Primer campeón de la Eurocopa?", "Deportes", "Dificil", "España", "URSS", "Yugoslavia", "Italia", "URSS"),
 
-            // --- HISTORIA (10) ---
+            // --- HISTORIA ---
             Pregunta("¿Año descubrimiento América?", "Historia", "Facil", "1492", "1500", "1485", "1992", "1492"),
             Pregunta("¿Primer hombre en la Luna?", "Historia", "Facil", "Aldrin", "Armstrong", "Collins", "Gagarin", "Armstrong"),
             Pregunta("¿Ciudad destruida por el Vesubio?", "Historia", "Facil", "Roma", "Atenas", "Pompeya", "Cartago", "Pompeya"),
@@ -64,7 +64,7 @@ object ProveedorPreguntas {
             Pregunta("¿Qué civilización usaba jeroglíficos?", "Historia", "Dificil", "Mayas", "Incas", "Egipcios", "Sumerios", "Egipcios"),
             Pregunta("¿Fundador del Imperio Mongol?", "Historia", "Dificil", "Kublai Kan", "Gengis Kan", "Attila", "Tamerlán", "Gengis Kan"),
 
-            // --- ARTE (10) ---
+            // --- ARTE ---
             Pregunta("¿Quién pintó la Mona Lisa?", "Arte", "Facil", "Picasso", "Van Gogh", "Da Vinci", "Dalí", "Da Vinci"),
             Pregunta("¿Autor de 'La noche estrellada'?", "Arte", "Facil", "Monet", "Van Gogh", "Rembrandt", "Renoir", "Van Gogh"),
             Pregunta("¿Nacionalidad de Pablo Picasso?", "Arte", "Facil", "Francés", "Italiano", "Español", "Mexicano", "Español"),
@@ -76,7 +76,7 @@ object ProveedorPreguntas {
             Pregunta("¿Quién pintó 'La joven de la perla'?", "Arte", "Dificil", "Vermeer", "Rubens", "Hals", "Steen", "Vermeer"),
             Pregunta("¿Movimiento de Andy Warhol?", "Arte", "Dificil", "Dadaísmo", "Futurismo", "Pop Art", "Minimalismo", "Pop Art"),
 
-            // --- LITERATURA (10) ---
+            // --- LITERATURA ---
             Pregunta("¿Autor del Quijote?", "Literatura", "Facil", "Cervantes", "Quevedo", "Lope", "Góngora", "Cervantes"),
             Pregunta("¿Quién escribió 'Hamlet'?", "Literatura", "Facil", "Dante", "Shakespeare", "Goethe", "Moliere", "Shakespeare"),
             Pregunta("¿Libro con el niño y el zorro?", "Literatura", "Facil", "Pinocho", "El Principito", "Peter Pan", "Bambi", "El Principito"),

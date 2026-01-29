@@ -1,22 +1,13 @@
 package com.example.trivialapp_base.view
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -24,94 +15,138 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.trivialapp_base.R
 import com.example.trivialapp_base.Routes
 import com.example.trivialapp_base.viewmodel.GameViewModel
 
-
 @Composable
 fun MenuScreen(navController: NavController, viewModel: GameViewModel = viewModel()) {
 
-    var selectedText: String by remember { mutableStateOf("") }
-    var expanded: Boolean by remember { mutableStateOf(false) }
-    val difficulty = listOf("Facil", "Medio","Dificil")
+    var expanded by remember { mutableStateOf(false) }
 
+    val opcionesDisponibles = viewModel.obtenerOpcionesDisponibles()
 
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
-        val (logoRef, ddmRef,buttonRef) = createRefs()
+        val (logoRef, typeButtonsRef, dropdownRef, playButtonRef) = createRefs()
 
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "Logo de la app",
             contentScale = ContentScale.Fit,
             modifier = Modifier
-                .size(100.dp)
+                .size(150.dp)
                 .constrainAs(logoRef) {
-                    top.linkTo(parent.top, margin = 100.dp)
+                    top.linkTo(parent.top, margin = 60.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
         )
 
-        Column(
-            Modifier
-                .padding(20.dp, 80.dp)
-                .constrainAs(ddmRef) {
-                    top.linkTo(parent.top, margin = 100.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-
-        ){
-            OutlinedTextField(
-                value = selectedText,
-                onValueChange = { selectedText = it },
-                enabled = false,
-                readOnly = true,
-                modifier = Modifier
-                    .clickable { expanded = true }
-                    .fillMaxWidth()
-            )
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .border(1.dp, Color.Black, RoundedCornerShape(4.dp))
-            ){
-                difficulty.forEach { level ->
-                    DropdownMenuItem(
-                        text = { Text(text = level) },
-                        onClick = {
-                            expanded = false
-                            selectedText = level
-                        })
-                }
-            }
-        }
-        Button(
-            onClick = {
-                if (selectedText.isNotEmpty()) {
-                    viewModel.setDificultad(selectedText)
-                    viewModel.resetGame() // MUY importante
-                    navController.navigate(Routes.GameScreen.route)
-                }
-            },
-            modifier = Modifier.constrainAs(buttonRef) {
-                top.linkTo(ddmRef.bottom)
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.constrainAs(typeButtonsRef) {
+                top.linkTo(logoRef.bottom, margin = 32.dp)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             }
         ) {
-            Text("Play")
+            Button(
+                onClick = { viewModel.setTipoFiltroUsuario("DIFICULTAD") },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (viewModel.tipoFiltro == "DIFICULTAD") MaterialTheme.colorScheme.primary else Color.Gray
+                )
+            ) { Text("Dificultad") }
+
+            Button(
+                onClick = { viewModel.setTipoFiltroUsuario("CATEGORIA") },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (viewModel.tipoFiltro == "CATEGORIA") MaterialTheme.colorScheme.primary else Color.Gray
+                )
+            ) { Text("Categoría") }
         }
 
+        if (viewModel.tipoFiltro != null) {
+            Column(
+                Modifier
+                    .padding(horizontal = 40.dp)
+                    .constrainAs(dropdownRef) {
+                        top.linkTo(typeButtonsRef.bottom, margin = 24.dp)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+            ) {
+                Text(
+                    text = "Selecciona ${viewModel.tipoFiltro?.lowercase()}:",
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                Box {
+                    OutlinedTextField(
+                        value = viewModel.valorFiltroSeleccionado ?: "",
+                        onValueChange = { },
+                        enabled = false,
+                        readOnly = true,
+                        placeholder = { Text("Selecciona una opción") },
+                        modifier = Modifier
+                            .clickable { expanded = true }
+                            .fillMaxWidth(),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            disabledTextColor = Color.Black,
+                            disabledBorderColor = MaterialTheme.colorScheme.primary,
+                            disabledPlaceholderColor = Color.Gray
+                        )
+                    )
+                    Box(
+                        modifier = Modifier
+                            .matchParentSize()
+                            .clickable { expanded = true }
+                    )
+                }
+
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .background(Color.White)
+                        .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
+                ) {
+                    opcionesDisponibles.forEach { opcion ->
+                        DropdownMenuItem(
+                            text = { Text(text = opcion) },
+                            onClick = {
+                                expanded = false
+                                viewModel.setValorFiltroUsuario(opcion)
+                            }
+                        )
+                    }
+                }
+            }
+        }
+
+        if (viewModel.valorFiltroSeleccionado != null) {
+            Button(
+                onClick = {
+                    viewModel.resetGame()
+                    navController.navigate(Routes.GameScreen.route)
+                },
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                    .constrainAs(playButtonRef) {
+                        top.linkTo(dropdownRef.bottom, margin = 20.dp)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+                    .fillMaxWidth(0.5f)
+                    .height(50.dp)
+            ) {
+                Text("JUGAR", style = MaterialTheme.typography.titleMedium)
+            }
+        }
     }
 }
