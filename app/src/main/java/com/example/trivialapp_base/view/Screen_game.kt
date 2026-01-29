@@ -43,7 +43,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp), // Padding general de los lados
+            .padding(16.dp),
         verticalArrangement = Arrangement.Top
     ) {
         Spacer(modifier = Modifier.height(60.dp))
@@ -53,7 +53,7 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(12.dp)
-                .padding(bottom = 8.dp) // Un poco de aire debajo de la barra
+                .padding(bottom = 8.dp)
         )
 
         val segundosRestantes = (viewModel.tiempoRestante * 10).toInt()
