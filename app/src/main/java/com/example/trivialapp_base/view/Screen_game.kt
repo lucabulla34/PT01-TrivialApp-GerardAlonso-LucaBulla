@@ -47,18 +47,41 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
 
-        Text(
-            text = pregunta.pregunta,
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(vertical = 24.dp)
-        )
+            LinearProgressIndicator(
+                progress = { viewModel.tiempoRestante },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(8.dp)
+            )
 
-        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            viewModel.respuestasMezcladas.forEach { respuesta ->
-                RespuestaButton(respuesta) {
-                    viewModel.responderPregunta(respuesta)
+            val segundosRestantes = (viewModel.tiempoRestante * 10).toInt()
+            Text(
+                text = "Tiempo restante: $segundosRestantes s",
+                fontSize = 14.sp,
+                modifier = Modifier.padding(top = 4.dp, bottom = 16.dp)
+            )
+
+            Text(
+                text = pregunta.pregunta,
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(vertical = 24.dp)
+            )
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                viewModel.respuestasMezcladas.forEach { respuesta ->
+                    RespuestaButton(respuesta) {
+                        viewModel.responderPregunta(respuesta)
+                    }
                 }
             }
         }
