@@ -33,7 +33,7 @@ import com.example.trivialapp_base.viewmodel.GameViewModel
 
 
 @Composable
-fun MenuScreen(navController: NavController, viewModel: GameViewModel = viewModel(), modifier: Modifier = Modifier) {
+fun MenuScreen(navController: NavController, viewModel: GameViewModel = viewModel()) {
 
     var selectedText: String by remember { mutableStateOf("") }
     var expanded: Boolean by remember { mutableStateOf(false) }
