@@ -1,5 +1,4 @@
 package com.example.trivialapp_base.view
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -11,12 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -26,11 +22,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.trivialapp_base.R
@@ -104,19 +98,17 @@ fun MenuScreen(navController: NavController, viewModel: GameViewModel = viewMode
         }
         Button(
             onClick = {
-
-                navController.navigate(Routes.GameScreen.route)
+                if (selectedText.isNotEmpty()) {
+                    viewModel.setDificultad(selectedText)
+                    viewModel.resetGame() // MUY importante
+                    navController.navigate(Routes.GameScreen.route)
+                }
             },
             modifier = Modifier.constrainAs(buttonRef) {
                 top.linkTo(ddmRef.bottom)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.White,
-                contentColor = Color.Black
-            ),
-            border = BorderStroke(5.dp, Color.Gray)
+            }
         ) {
             Text("Play")
         }
