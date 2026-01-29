@@ -43,50 +43,43 @@ fun GameScreen(navController: NavController, viewModel: GameViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.SpaceBetween
+            .padding(16.dp), // Padding general de los lados
+        verticalArrangement = Arrangement.Top
     ) {
+        Spacer(modifier = Modifier.height(60.dp))
+
+        LinearProgressIndicator(
+            progress = viewModel.tiempoRestante, // Asegúrate: NO { }
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(12.dp)
+                .padding(bottom = 8.dp) // Un poco de aire debajo de la barra
+        )
+
+        val segundosRestantes = (viewModel.tiempoRestante * 10).toInt()
+        Text(
+            text = "Tiempo restante: $segundosRestantes s",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
+
+        Text(
+            text = pregunta.pregunta,
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 32.dp)
+        )
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.fillMaxWidth()
         ) {
-
-            LinearProgressIndicator(
-                progress = { viewModel.tiempoRestante },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(8.dp)
-            )
-
-            val segundosRestantes = (viewModel.tiempoRestante * 10).toInt()
-            Text(
-                text = "Tiempo restante: $segundosRestantes s",
-                fontSize = 14.sp,
-                modifier = Modifier.padding(top = 4.dp, bottom = 16.dp)
-            )
-
-            Text(
-                text = pregunta.pregunta,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(vertical = 24.dp)
-            )
-
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                viewModel.respuestasMezcladas.forEach { respuesta ->
-                    RespuestaButton(respuesta) {
-                        viewModel.responderPregunta(respuesta)
-                    }
+            viewModel.respuestasMezcladas.forEach { respuesta ->
+                RespuestaButton(texto = respuesta) {
+                    viewModel.responderPregunta(respuesta)
                 }
             }
         }
-
     }
 }
-
-
